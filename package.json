@@ -116,6 +116,7 @@
     "@vaadin/virtual-list": "23.0.0",
     "@webcomponents/shadycss": "1.9.6",
     "construct-style-sheets-polyfill": "3.0.4",
+    "d3": "^7.3.0",
     "date-fns": "2.23.0",
     "lit": "2.1.4"
   },
@@ -285,7 +286,7 @@
       "workbox-precaching": "6.4.2",
       "workbox-webpack-plugin": "6.4.2"
     },
-    "hash": "a9484eec2e6f3ff6d8877162ea50b76ebd9097c0e6c87cfcca3c14038eda39db"
+    "hash": "664a340b626412636c4bfee9c951eaf7cb2379a01fe6dfffe3b1d89b74e7cef7"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -401,6 +402,8 @@
     "@vaadin/common-frontend": "$@vaadin/common-frontend",
     "construct-style-sheets-polyfill": "$construct-style-sheets-polyfill",
     "lit": "$lit",
-    "@polymer/polymer": "$@polymer/polymer"
+    "@polymer/polymer": "$@polymer/polymer",
+    "date-fns": "$date-fns",
+    "d3": "$d3"
   }
 }
