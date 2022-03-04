@@ -27,6 +27,7 @@ import java.util.TreeMap;
 public class MainView extends VerticalLayout {
 
     public MainView() {
+        new DataLoading();
         var button = new Button("Click me");
         var image = new Image("https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg", "java logo");
         image.setWidthFull();
