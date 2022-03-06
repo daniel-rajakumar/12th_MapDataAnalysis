@@ -32,12 +32,17 @@ public class MainView extends VerticalLayout {
 
     public MainView() {
         new DataLoading();
-        Grid<String> grid = new Grid<>();
-        grid.setItems(Storage.MAP_SALARY.keySet());
-        grid.addColumn(key -> key).setHeader(new Html("<h2>Starting Salary</h2>")).setFlexGrow(0).setAutoWidth(true);
-        grid.addColumn(key -> Storage.MAP_SALARY.get(key).getStarting_salary()).setHeader("Starting Salary").setFlexGrow(0).setAutoWidth(true);
-        grid.addColumn(key -> Storage.MAP_UNEMPLOYMENT.get(key).getUnemployment_rate()).setHeader("Unemployment Rate").setFlexGrow(0).setAutoWidth(true);
-        add(grid);
+        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_SALARY));
+        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_UNEMPLOYMENT));
+
+
+
+//        Grid<String> grid = new Grid<>();
+//        grid.setItems(Storage.MAP_SALARY.keySet());
+//        grid.addColumn(key -> key).setHeader(new Html("<h2>Starting Salary</h2>")).setFlexGrow(0).setAutoWidth(true);
+//        grid.addColumn(key -> Storage.MAP_SALARY.get(key).getStarting_salary()).setHeader("Starting Salary").setFlexGrow(0).setAutoWidth(true);
+//        grid.addColumn(key -> Storage.MAP_UNEMPLOYMENT.get(key).getUnemployment_rate()).setHeader("Unemployment Rate").setFlexGrow(0).setAutoWidth(true);
+//        addColumn(grid);
     }
 }
 

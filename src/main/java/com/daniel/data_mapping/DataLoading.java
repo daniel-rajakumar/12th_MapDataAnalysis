@@ -25,14 +25,14 @@ public class DataLoading {
     }
 
     void setup_dataSetOne() throws IOException {
-        Files.readAllLines(Path.of(RES_DIR + FILE_ONE_NAME)).forEach(line -> {
+        Files.readAllLines(Path.of(RES_DIR + FILE_ONE_NAME)).stream().skip(1).forEach(line -> {
             String[] words = split_csv_line_to_arr(line);
             Storage.MAP_SALARY.put(words[0], new Salary(words));
         });
     }
 
     void setup_dataSetTwo() throws IOException {
-        Files.readAllLines(Path.of(RES_DIR + FILE_TWO_NAME)).forEach(line -> {
+        Files.readAllLines(Path.of(RES_DIR + FILE_TWO_NAME)).stream().skip(1).forEach(line -> {
             String[] words = split_csv_line_to_arr(line);
             Storage.MAP_UNEMPLOYMENT.put(words[0], new Unemployment(words));
         });
