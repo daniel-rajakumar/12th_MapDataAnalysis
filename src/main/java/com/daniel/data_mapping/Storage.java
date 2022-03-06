@@ -1,6 +1,5 @@
 package com.daniel.data_mapping;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -14,9 +13,10 @@ import java.util.TreeMap;
     73: Religion
 
   */
+//                System.out.println(++count + "k -> " + k + " | v -> " + "NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLl");
 
 public class Storage {
 
-    final static Map<String, Salary> MAP_1 = new TreeMap<>();
-    final static Map<String, Unemployment> MAP_2 = new TreeMap<>();
+    final static Map<String, Salary> MAP_SALARY = new TreeMap<>();
+    final static Map<String, Unemployment> MAP_UNEMPLOYMENT = new TreeMap<>();
 }

@@ -18,29 +18,55 @@ public class DataLoading {
         try {
             setup_dataSetOne();
             setup_dataSetTwo();
-        } catch (IOException e) { e.printStackTrace(); }
+            dataCleanUp();
 
-        Storage.MAP_1.forEach((k, v) -> {
-            Storage.MAP_2.forEach((k2, v2) -> {
-                if (k.equals(k2))
-                    System.out.println(++count + ") k -> " + k + " | v -> " + k2);
+            Storage.MAP_SALARY.forEach((k, v) -> {
+                System.out.println("salary key: " + k + " -> salary value: " + v);
             });
-        });
-
+            System.out.println("\n\n");
+            Storage.MAP_UNEMPLOYMENT.forEach((k, v) -> {
+                System.out.println("unemployment key: " + k + " -> unemployment value: " + v);
+            });
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     void setup_dataSetOne() throws IOException {
         Files.readAllLines(Path.of(RES_DIR + FILE_ONE_NAME)).forEach(line -> {
             String[] words = split_csv_line_to_arr(line);
-            Storage.MAP_1.put(words[0], new Salary(words));
+            Storage.MAP_SALARY.put(words[0], new Salary(words));
         });
     }
 
     void setup_dataSetTwo() throws IOException {
         Files.readAllLines(Path.of(RES_DIR + FILE_TWO_NAME)).forEach(line -> {
             String[] words = split_csv_line_to_arr(line);
-            Storage.MAP_2.put(words[0], new Unemployment(words));
+            Storage.MAP_UNEMPLOYMENT.put(words[0], new Unemployment(words));
         });
+    }
+
+    void dataCleanUp(){
+        var map_1 = new HashMap<>(Storage.MAP_SALARY);
+        var map_2 = new HashMap<>(Storage.MAP_UNEMPLOYMENT);
+        Storage.MAP_SALARY.clear();
+        Storage.MAP_UNEMPLOYMENT.clear();
+        map_1.forEach((k, v) -> {
+            map_2.forEach((k2, v2) -> {
+                if (keyMatches(k, k2)) {
+                    Storage.MAP_SALARY.put(k, v);
+                    Storage.MAP_UNEMPLOYMENT.put(k, v2);
+                }
+            });
+        });
+    }
+
+    boolean keyMatches(String a, String b){
+        return a.equals(b) // below, special cases
+            || a.equals("Education")        && b.equals("General Education")
+            || a.equals("English")          && b.equals("English Language")
+            || a.equals("Graphic Design")   && b.equals("Commercial Art & Graphic Design")
+            || a.equals("Math")             && b.equals("Mathematics")
+            || a.equals("Nutrition")        && b.equals("Nutrition Sciences")
+            || a.equals("Religion")         && b.equals("Theology and Religion");
     }
 
     public String[] split_csv_line_to_arr(String line){
