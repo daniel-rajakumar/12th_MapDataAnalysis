@@ -1,0 +1,43 @@
+:root {
+    --one: #021721;
+    --two: #08464A;
+    --three: #268C6F;
+    --four: #A7D6AC;
+    --five: #D2E8C3;
+}
+
+/*.my-border {*/
+/*    border: 2px solid var(--three);*/
+/*    !*border: #55BF3B s;*!*/
+/*}*/
+
+:host {
+    background-color: var(--four);
+    border: 30px solid var(--four);
+}
+
+[part~="cell"] {
+    background-color: var(--one);
+    color: var(--five);
+    font-size: x-large;
+}
+
+[part~="header-cell"] {
+    background-color: var(--three);
+}
+
+
+
+
+:host #table {
+    overflow: hidden;
+}
+
+table, td {
+    border: 2px solid var(--three);
+}
+
+table, th {
+    border: 5px solid var(--three);
+}
+

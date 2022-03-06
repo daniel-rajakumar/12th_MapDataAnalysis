@@ -1,48 +1,55 @@
 package com.daniel.data_mapping;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import elemental.json.JsonObject;
-import org.springframework.boot.json.GsonJsonParser;
-
-import java.io.Serializable;
-import java.util.Map;
-import java.util.TreeMap;
 
 @PageTitle("Home")
 @Route("")
 @JsModule("./script.js")
 @JsModule("https://code.jquery.com/jquery-3.6.0.min.js")
 @JsModule("https://d3js.org/d3.v7.min.js")
+@CssImport(
+        themeFor = "vaadin-grid",
+        value = "vaadin-grid.css"
+)
 public class MainView extends VerticalLayout {
 
     public MainView() {
         new DataLoading();
-        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_SALARY));
-        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_UNEMPLOYMENT));
+//        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_SALARY));
+//        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_UNEMPLOYMENT));
+//
+        Grid<String> grid = new Grid<>();
+        grid.setItems(Storage.MAP_SALARY.keySet());
+        grid.addColumn(key -> key)
+                .setHeader(customHeaderStyle("Starting Salary"))
+//                .setFlexGrow(0)
+                .setAutoWidth(true);
 
+        grid.addColumn(key -> "$ " + Storage.MAP_SALARY.get(key).getStarting_salary())
+                .setHeader(customHeaderStyle("Starting Salary"))
+//                .setFlexGrow(0)
+                .setAutoWidth(true);
 
+        grid.addColumn(key -> Storage.MAP_UNEMPLOYMENT.get(key).getUnemployment_rate() + " %")
+                .setHeader(customHeaderStyle("Unemployment Rate"))
+//                .setFlexGrow(0)
+                .setAutoWidth(true);
+//        grid.getElement().getStyle().set("background-color", "#00000000");
+//        grid.getElement().getStyle().set("color", "#dddddd");
+//        grid.setClassNameGenerator(item -> "my-border");
+        add(grid);
+    }
 
-//        Grid<String> grid = new Grid<>();
-//        grid.setItems(Storage.MAP_SALARY.keySet());
-//        grid.addColumn(key -> key).setHeader(new Html("<h2>Starting Salary</h2>")).setFlexGrow(0).setAutoWidth(true);
-//        grid.addColumn(key -> Storage.MAP_SALARY.get(key).getStarting_salary()).setHeader("Starting Salary").setFlexGrow(0).setAutoWidth(true);
-//        grid.addColumn(key -> Storage.MAP_UNEMPLOYMENT.get(key).getUnemployment_rate()).setHeader("Unemployment Rate").setFlexGrow(0).setAutoWidth(true);
-//        addColumn(grid);
+    Html customHeaderStyle(String text){
+        String fontColor = "#D2E8C3";
+
+        return new Html("<h2 style=\"color:" + fontColor + ";\">"+ text +" </h2>");
     }
 }
 

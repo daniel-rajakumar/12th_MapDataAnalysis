@@ -16,7 +16,7 @@ window.ns = {
         console.log(arr.length)
     },
 
-    printMap : async function (map) {
+    printMap : function (map) {
         // const { d3 } = await import("https://d3js.org/d3.v4.min.js")
         // var str = JSON.stringify(map, null, 2)
         // console.log(str)
