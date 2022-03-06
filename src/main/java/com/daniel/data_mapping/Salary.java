@@ -35,4 +35,15 @@ public class Salary {
     public String getSalary_90th_percentage() {
         return salary_90th_percentage;
     }
+
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "starting_salary='" + starting_salary + '\'' +
+                ", salary_10th_percentage='" + salary_10th_percentage + '\'' +
+                ", salary_25th_percentage='" + salary_25th_percentage + '\'' +
+                ", salary_75th_percentage='" + salary_75th_percentage + '\'' +
+                ", salary_90th_percentage='" + salary_90th_percentage + '\'' +
+                '}';
+    }
 }
