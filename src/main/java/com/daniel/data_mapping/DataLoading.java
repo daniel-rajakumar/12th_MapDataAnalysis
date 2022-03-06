@@ -12,21 +12,15 @@ public class DataLoading {
     final String RES_DIR = ROOT_DIR + "res/";
     final String FILE_ONE_NAME = "major_salary.csv";
     final String FILE_TWO_NAME = "unemployment.csv";
-    int count = 0;
 
     public DataLoading() {
         try {
             setup_dataSetOne();
             setup_dataSetTwo();
             dataCleanUp();
-
-            Storage.MAP_SALARY.forEach((k, v) -> {
-                System.out.println("salary key: " + k + " -> salary value: " + v);
-            });
+            Storage.MAP_SALARY.forEach((k, v) -> System.out.println(k + ": " + v));
             System.out.println("\n\n");
-            Storage.MAP_UNEMPLOYMENT.forEach((k, v) -> {
-                System.out.println("unemployment key: " + k + " -> unemployment value: " + v);
-            });
+            Storage.MAP_UNEMPLOYMENT.forEach((k, v) -> System.out.println(k + ": " + v));
         } catch (IOException e) { e.printStackTrace(); }
     }
 
