@@ -1,0 +1,39 @@
+:root {
+    --one: #021721;
+    --two: #08464A;
+    --three: #268C6F;
+    --four: #A7D6AC;
+    --five: #D2E8C3;
+}
+
+
+
+vaadin-tab::after {
+    background-color: var(--three);
+    padding-right: 100%;
+    padding-bottom: 10%;
+    padding-top: 10%;
+}
+
+vaadin-tab::before {
+    background-color: var(--three);
+    padding-right: 10%;
+    padding-bottom: 10%;
+    padding-top: 10%;
+}
+
+vaadin-tab {
+    color: var(--five);
+    font-size: xx-large;
+    padding-bottom: 10%;
+    padding-top: 10%;
+    padding-left: 15%;
+}
+
+/*vaadin-horizontal-layout {*/
+/*    background-color: #000003;*/
+/*}*/
+
+.divider {
+    background-color: red;
+}
