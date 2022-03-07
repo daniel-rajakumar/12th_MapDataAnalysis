@@ -25,19 +25,32 @@ import java.util.Arrays;
 @CssImport(value = "home-style.css")
 public class HomeView extends FlexLayout {
     String[] tabTitles = {"Topic", "Hypothesis", "Result", "Conclusion", "Citation"};
+    Label label;
 
     public HomeView() {
-        setHeightFull();
+        setSizeFull();
 //        setPadding(false);
         Button button = new Button("click me");
         button.getElement().getStyle().set("margin-top", "100px");
-        Label textField = new Label("hello world, how are you doing? I think you are doing great. This is cool. one two three four");
-//        textField.setSizeFull();
-        textField.setClassName("home-Label");
-        FlexLayout flexLayout = new FlexLayout(setUpTabs(tabTitles), textField);
 //        flexLayout.setFlexGrow(30);
 //        flexLayout.setFlexBasis("30px");
-        add(flexLayout);
+//        FlexLayout flexLayout = new FlexLayout(setUpTabs(tabTitles), getLabel());
+////        flexLayout.setFlexGrow(0);
+//        flexLayout.setWidthFull();
+//        flexLayout.
+        label = getLabel();
+        add(
+                setUpTabs(tabTitles),
+                label
+        );
+
+    }
+
+    Label getLabel(){
+        label = new Label();
+        label.setClassName("home-Label");
+        label.setWidthFull();
+        return label;
     }
 
     Tabs setUpTabs(String... tab){
@@ -45,12 +58,22 @@ public class HomeView extends FlexLayout {
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         tabs.getElement().getStyle().set("margin-top", "85px");
         tabs.getElement().getStyle().set("background-color", "#021721");
-//        tabs.setHeight("1000px");
-//        tabs.setHeightFull();
+//        tabs.setWidth("300px");
         tabs.setWidth("300px");
-
+        tabs.addSelectedChangeListener(e -> label.setText(getTabInfo(e.getSelectedTab().getLabel())));
         Arrays.stream(tab).forEach(e -> tabs.add(new Tab(e)));
         return tabs;
+    }
+
+    String getTabInfo(String title){
+        switch (title){
+            case "Topic": return "Topic goes here";
+            case "Hypothesis": return "Hypothesis goes here";
+            case "Result": return "Result goes here";
+            case "Conclusion": return "Conclusion goes here";
+            case "Citation": return "Citation goes here";
+            default: return "";
+        }
     }
 
 
