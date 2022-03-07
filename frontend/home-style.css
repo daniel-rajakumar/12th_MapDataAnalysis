@@ -37,3 +37,20 @@ vaadin-tab {
 .divider {
     background-color: red;
 }
+
+
+.home-Label {
+    display: flex;
+    align-items: center; /* Vertical center alignment */
+    justify-content: center; /* Horizontal center alignment */
+    text-align: center;
+
+    border-radius: 10px;
+    margin: 110px 20px 20px;
+    padding: 25px;
+    color: var(--five);
+    background-color: var(--three);
+    font-size: xxx-large;
+    word-wrap: break-word; /* IE  */
+    white-space: -moz-pre-wrap; /* Firefox */
+}
