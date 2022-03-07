@@ -1,14 +1,11 @@
 package com.daniel.data_mapping;
 
 import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -23,17 +20,12 @@ import com.vaadin.flow.router.Route;
         value = "vaadin-grid.css"
 )
 @CssImport(value = "header-style.css")
-public class MainView extends VerticalLayout {
+public class DataView extends VerticalLayout {
 
-    public MainView() {
-        new DataLoading();
+    public DataView() {
         setWidthFull();
         setHeightFull();
         add(setUpGrid());
-//        add(new HorizontalLayout(setUpGrid(), new Button("click me")));
-//        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_SALARY));
-//        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_UNEMPLOYMENT));
-//
     }
 
     Grid<String> setUpGrid(){
@@ -42,27 +34,32 @@ public class MainView extends VerticalLayout {
         grid.addColumn(key -> key)
                 .setHeader(customHeaderStyle("Starting Salary"))
                 .setFlexGrow(1)
+                .setSortable(true)
                 .setAutoWidth(true);
 
         grid.addColumn(key -> "$ " + Storage.MAP_SALARY.get(key).getStarting_salary())
                 .setHeader(customHeaderStyle("Starting Salary"))
                 .setFlexGrow(1)
+                .setSortable(true)
                 .setAutoWidth(true);
 
         grid.addColumn(key -> Storage.MAP_UNEMPLOYMENT.get(key).getUnemployment_rate() + " %")
                 .setHeader(customHeaderStyle("Unemployment Rate"))
                 .setFlexGrow(1)
+                .setSortable(true)
                 .setAutoWidth(true);
-//        grid.getElement().getStyle().set("background-color", "#00000000");
-//        grid.getElement().getStyle().set("color", "#dddddd");
-//        grid.setClassNameGenerator(item -> "my-border");
+
         grid.getElement().getStyle().set("margin-top", "100px");
+        grid.addSortListener(e -> {
+//            new Notification(String.valueOf(System.currentTimeMillis())).open();
+        });
         return grid;
     }
 
-    Html customHeaderStyle(String text){
+    String customHeaderStyle(String text){
         String fontColor = "#D2E8C3";
-        return new Html("<h2 style=\"color:" + fontColor + ";\">"+ text +" </h2>");
+//        return new Html("<h2 style=\"color:" + fontColor + ";\">"+ text + " </h2>");
+        return text;
     }
 }
 

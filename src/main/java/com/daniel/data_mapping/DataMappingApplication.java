@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DataMappingApplication {
 
 	public static void main(String[] args) {
+		new DataLoading();
 		SpringApplication.run(DataMappingApplication.class, args);
 	}
 
