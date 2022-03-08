@@ -29,21 +29,11 @@ public class HomeView extends FlexLayout {
 
     public HomeView() {
         setSizeFull();
-//        setPadding(false);
-        Button button = new Button("click me");
-        button.getElement().getStyle().set("margin-top", "100px");
-//        flexLayout.setFlexGrow(30);
-//        flexLayout.setFlexBasis("30px");
-//        FlexLayout flexLayout = new FlexLayout(setUpTabs(tabTitles), getLabel());
-////        flexLayout.setFlexGrow(0);
-//        flexLayout.setWidthFull();
-//        flexLayout.
         label = getLabel();
         add(
                 setUpTabs(tabTitles),
                 label
         );
-
     }
 
     Label getLabel(){
