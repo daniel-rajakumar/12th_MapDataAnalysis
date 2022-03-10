@@ -39,7 +39,6 @@ public class ChartView extends HorizontalLayout {
         add(
                 layout_right,
                 layout_left
-
         );
 
     }
@@ -67,8 +66,10 @@ public class ChartView extends HorizontalLayout {
         verticalLayout.setClassName("chart-vertical-layout");
         verticalLayout.setWidthFull();
 
-        verticalLayout.add(getComboBox());
-        verticalLayout.add(getComboBox());
+        ComboBox<String> one = getComboBox();
+        ComboBox<String> two = getComboBox();
+
+        verticalLayout.add(one, two);
 
         return verticalLayout;
     }
@@ -76,8 +77,8 @@ public class ChartView extends HorizontalLayout {
     ComboBox<String> getComboBox(){
         ComboBox<String> comboBox = new ComboBox<>("Employee");
         comboBox.setWidthFull();
-        comboBox.getStyle().set("--vaadin-combo-box-overlay-width", "350px");
 
+        comboBox.getStyle().set("--vaadin-combo-box-overlay-width", "350px");
         ComboBox.ItemFilter<String> filter = this::matchesTerm;
         comboBox.setItems(filter, Storage.MAP_SALARY.keySet());
         comboBox.setItemLabelGenerator(person -> person);
