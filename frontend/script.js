@@ -35,7 +35,7 @@ function drawChart(map_salary, map_unemployment){
     console.log(map_2);
     const margin = ({ top: 20, right: 20, bottom: 20, left: 50 })
     const height = 500
-    const width = 700
+    const width = 1000
 
     const data = require('lodash').zipWith(Array.from(map_1.values()), Array.from(map_2.values()),
         (salary, unemployment) => ({

@@ -1,0 +1,29 @@
+:root {
+    --one: #021721;
+    --two: #08464A;
+    --three: #268C6F;
+    --four: #A7D6AC;
+    --five: #D2E8C3;
+    --fontSize: 25px;
+}
+
+
+
+.custom-vaadin-icon {
+    color: var(--five);
+       font-size: var(--fontSize);
+}
+
+
+.custom-search-color {
+    color: var(--five);
+    font-size:  var(--fontSize);
+}
+
+#vaadin-text-field-0 {
+    color: var(--five);
+    font-size:  var(--fontSize);
+
+}
+
+

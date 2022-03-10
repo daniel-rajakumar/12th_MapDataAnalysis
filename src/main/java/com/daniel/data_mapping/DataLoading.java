@@ -1,5 +1,10 @@
 package com.daniel.data_mapping;
 
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

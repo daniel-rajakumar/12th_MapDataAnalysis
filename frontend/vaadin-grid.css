@@ -27,8 +27,6 @@
 }
 
 
-
-
 :host #table {
     overflow: hidden;
 }
@@ -40,4 +38,3 @@ table, td {
 table, th {
     border: 5px solid var(--three);
 }
-

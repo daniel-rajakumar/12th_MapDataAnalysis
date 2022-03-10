@@ -4,10 +4,18 @@ import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.dataview.GridListDataView;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import java.util.List;
+import java.util.Set;
 
 @PageTitle("Home")
 @Route("data")
@@ -20,12 +28,53 @@ import com.vaadin.flow.router.Route;
         value = "vaadin-grid.css"
 )
 @CssImport(value = "header-style.css")
+@CssImport(value = "search-style.css")
 public class DataView extends VerticalLayout {
+    Grid<String> grid = setUpGrid();
 
     public DataView() {
         setWidthFull();
         setHeightFull();
-        add(setUpGrid());
+
+        Set<String> people = Storage.MAP_SALARY.keySet();
+        GridListDataView<String> dataView = grid.setItems(people);
+
+        TextField searchField = new TextField();
+        searchField.setWidth("50%");
+        searchField.setPlaceholder("Search");
+        searchField.setClassName("custom-search-color");
+
+        Icon icon = new Icon(VaadinIcon.SEARCH);
+        icon.setClassName("custom-vaadin-icon");
+        searchField.setPrefixComponent(icon);
+        searchField.setValueChangeMode(ValueChangeMode.EAGER);
+        searchField.addValueChangeListener(e -> dataView.refreshAll());
+//        searchField.getStyle().set("color", "white");
+//        searchField.getElement().getStyle()("vaadin-icon")
+
+
+        dataView.addFilter(person -> {
+            String searchTerm = searchField.getValue().trim();
+
+            if (searchTerm.isEmpty())
+                return true;
+
+            boolean matchesFullName = matchesTerm(person,
+                    searchTerm);
+
+
+            return matchesFullName;
+        });
+
+        getElement().getStyle().set("padding-top", "100px");
+
+
+        add(searchField, grid);
+    }
+
+
+    private boolean matchesTerm(String value, String searchTerm) {
+        return value.toLowerCase().contains(searchTerm.toLowerCase());
     }
 
     Grid<String> setUpGrid(){
@@ -49,7 +98,6 @@ public class DataView extends VerticalLayout {
                 .setSortable(true)
                 .setAutoWidth(true);
 
-        grid.getElement().getStyle().set("margin-top", "100px");
         grid.addSortListener(e -> {
 //            new Notification(String.valueOf(System.currentTimeMillis())).open();
         });
