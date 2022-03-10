@@ -38,7 +38,7 @@ public class ChartView extends HorizontalLayout {
 //                getLayout(layout_right)
 //        );
 
-        UI.getCurrent().getPage().executeJs("ns.printMap($0)", new Gson().toJson(Storage.MAP_SALARY));
+        UI.getCurrent().getPage().executeJs("ns.printMap($0, $1)", new Gson().toJson(Storage.MAP_SALARY), new Gson().toJson(Storage.MAP_UNEMPLOYMENT));
 //        LinearRegression linearRegression = new LinearRegression(null, null);
 
 

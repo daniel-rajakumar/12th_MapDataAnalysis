@@ -18,12 +18,28 @@ window.ns = {
         console.log(arr.length)
     },
 
-    printMap : function (map) {
+    printMap : function (map_salary, map_unemployment) {
         // const { d3 } = await import("https://d3js.org/d3.v4.min.js")
         // var str = JSON.stringify(map, null, 2)
         // console.log(str)
-        console.log(JSON.parse(map));
+        let map_1 = new Map(Object.entries(JSON.parse(map_salary)));
+        let map_2 = new Map(Object.entries(JSON.parse(map_unemployment)));
+        console.log(map_1);
+        console.log(map_2);
 
+        const _ = require('lodash');
+
+        const data = _.zipWith(Array.from(map_1.values()), Array.from(map_2.values()),
+            (salary, unemployment) => (
+            {
+                x: salary.starting_salary,
+                y: unemployment.unemployment_rate
+            }
+        ))
+
+        console.log(data)
+
+        /*
         let linearRegression = d3.regressionLinear()
             .x(d => d.x)
             .y(d => d.y)
@@ -31,18 +47,58 @@ window.ns = {
 
 
         const margin = {left: 50, right: 50, top: 50, bottom: 50};
-        const innerWidth = 100;
-        const innerHeight = 100;
-        // const svg = d3.select(DOM.svg(innerWidth + margin.left + margin.right, innerHeight + margin.top + margin.bottom))
+        const innerWidth = 500;
+        const innerHeight = 500;
 
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute('style', 'border: 1px solid black');
-        svg.setAttribute('width', '600');
-        svg.setAttribute('height', '250');
-        svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+        // const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        // svg.setAttribute('style', 'border: 1px solid black');
+        // svg.setAttribute('width', '600');
+        // svg.setAttribute('height', '250');
+        // svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+        //
+        // const g = svg.append("g")
+        //     .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        //
+        console.log("test -> " + d3.selectAll("#outlet"))
+        const svg = d3.select("#outlet")
+            .append("svg")
+            .attr("width", innerWidth)
+            .attr("height", innerHeight)
+            .append("g")
+            .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-        document.getElementById('outlet').appendChild(svg);
+        const x = d3.scaleLinear()
+            .range([0, innerWidth]);
+
+        const y = d3.scaleLinear()
+            .range([innerHeight,0]);
+
+        const xAxis = d3.axisBottom()
+            .scale(x);
+
+        const yAxis = d3.axisLeft()
+            .scale(y);
+
+        linearRegression = d3.regressionLinear()
+            .x(d => d.x)
+            .y(d => d.y)
+            .domain([-1.7, 16]);
+
+        console.log(linearRegression)
+
+        // const data = _.zipWith(yearsExperience, salaries, (year, salary) => (
+        //     {
+        //         x: year,
+        //         y: salary
+        //     }
+        // ))
+
+        svg.node()
+        //
+        //
+        // document.getElementById('outlet').appendChild(svg);
         // createNode()
+         */
     }
 }
 function createNode() {
