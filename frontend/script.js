@@ -21,17 +21,100 @@ window.ns = {
         console.log(arr.length)
     },
 
-    drawGraphs : function (map_salary, map_unemployment) {
-        drawLinearRegGraph(map_salary, map_unemployment)
-        drawPieCharts(map_salary, map_unemployment)
+    drawPie : function (one, two) {
+        drawPieCharts(one, two);
+    },
+
+    updatePie : function (one, two){
+        console.log("wait")
     }
 
 
-}
 
-function drawPieCharts(map_salary, map_unemployment){
 
 }
+
+function drawPieCharts(one, two) {
+    let map_1 = new Map(Object.entries(JSON.parse(one)));
+    let map_2 = new Map(Object.entries(JSON.parse(two)));
+    // set the dimensions and margins of the graph
+    const width = 450
+    const height = 450
+    const margin = 40
+
+// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    var radius = Math.min(width, height) / 2 - margin
+
+// append the svg object to the div called 'my_dataviz'
+    var svg = d3.select("#chart_pie")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+    // create 2 data_set
+    const data1 = {a: 9, b: 20, c:30, d:8, e:12}
+    const data2 = {a: 6, b: 16, c:20, d:14, e:19, f:12}
+
+    // set the color scale
+    const color = d3.scaleOrdinal()
+        .domain(["a", "b", "c", "d", "e", "f"])
+        .range(d3.schemeDark2);
+
+    function update(data) {
+        // Compute the position of each group on the pie:
+        const pie = d3.pie()
+            .value(function (d) {
+                return d.value;
+            })
+            .sort(function (a, b) {
+                console.log(a);
+                return d3.ascending(a.key, b.key);
+            });
+
+
+        // This make sure that group order remains the same in the pie chart
+        const data_ready = pie(d3.entries(data));
+
+        console.log(data)
+
+        // map to data
+        const u = svg
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+            .selectAll("path")
+            .data(data_ready);
+
+        // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+        u
+            .enter()
+            .append('path')
+            .merge(u)
+            .transition()
+            .duration(1000)
+            .attr('d', d3.arc()
+                .innerRadius(0)
+                .outerRadius(radius)
+            )
+            .attr('fill', function(d){ return(color(d.data.key)) })
+            .attr("stroke", "white")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+
+        // remove the group that is not present anymore
+        u.exit()
+            .remove()
+
+    }
+
+
+    update(data2)
+}
+
+// A function that create / update the plot for a given variable:
+
+
 
 function drawLinearRegGraph(map_salary, map_unemployment){
     let map_1 = new Map(Object.entries(JSON.parse(map_salary)));
@@ -120,7 +203,7 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .attr("width", width)
         .attr("height", height)
         .append("g")
-    // .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        // .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 
     renderChart(svg)
