@@ -2,9 +2,11 @@ package com.daniel.data_mapping;
 
 import com.google.gson.Gson;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
@@ -31,23 +33,30 @@ public class ChartView extends HorizontalLayout {
 
     public ChartView() {
         setSizeFull();
-        VerticalLayout layout_left = new VerticalLayout();
-        VerticalLayout layout_right = new VerticalLayout();
-//        add(
-//                getLayout(layout_left),
-//                getLayout(layout_right)
-//        );
+        VerticalLayout layout_left = getLayout();
+        VerticalLayout layout_right = getLayout();
+        add(
+                layout_left,
+                layout_right
+        );
 
-        UI.getCurrent().getPage().executeJs("ns.printMap($0, $1)", new Gson().toJson(Storage.MAP_SALARY), new Gson().toJson(Storage.MAP_UNEMPLOYMENT));
-//        LinearRegression linearRegression = new LinearRegression(null, null);
+        layout_left.getElement().appendChild((new Html(
+                "<div class=\"chart\"></div>"
+        )).getElement());
 
+
+        UI.getCurrent().getPage().executeJs("ns.printMap($0, $1)"
+                    , new Gson().toJson(Storage.MAP_SALARY)
+                    , new Gson().toJson(Storage.MAP_UNEMPLOYMENT)
+        );
 
     }
-    VerticalLayout getLayout(VerticalLayout label){
-//        label = new Label();
-        label.setClassName("chart-vertical-layout");
-        label.setWidthFull();
-        return label;
+
+    VerticalLayout getLayout(){
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setClassName("chart-vertical-layout");
+        verticalLayout.setWidthFull();
+        return verticalLayout;
     }
 
     Tabs setUpTabs(String... tab){
