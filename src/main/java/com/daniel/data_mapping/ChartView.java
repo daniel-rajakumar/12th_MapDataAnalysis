@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
@@ -33,30 +34,60 @@ public class ChartView extends HorizontalLayout {
 
     public ChartView() {
         setSizeFull();
-        VerticalLayout layout_left = getLayout();
-        VerticalLayout layout_right = getLayout();
+        VerticalLayout layout_left = getLeftLayout();
+        VerticalLayout layout_right = getRightLayout();
         add(
-                layout_left,
-                layout_right
-        );
+                layout_right,
+                layout_left
 
-        layout_left.getElement().appendChild((new Html(
-                "<div class=\"chart\"></div>"
-        )).getElement());
-
-
-        UI.getCurrent().getPage().executeJs("ns.drawGraphs($0, $1)"
-                    , new Gson().toJson(Storage.MAP_SALARY)
-                    , new Gson().toJson(Storage.MAP_UNEMPLOYMENT)
         );
 
     }
 
-    VerticalLayout getLayout(){
+    VerticalLayout getLeftLayout(){
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setClassName("chart-vertical-layout");
         verticalLayout.setWidthFull();
+
+        verticalLayout.getElement().appendChild((new Html(
+                "<div class=\"chart\"></div>"
+        )).getElement());
+
+        UI.getCurrent().getPage().executeJs("ns.drawGraphs($0, $1)"
+                , new Gson().toJson(Storage.MAP_SALARY)
+                , new Gson().toJson(Storage.MAP_UNEMPLOYMENT)
+        );
+
         return verticalLayout;
+    }
+
+
+    VerticalLayout getRightLayout(){
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setClassName("chart-vertical-layout");
+        verticalLayout.setWidthFull();
+
+        verticalLayout.add(getComboBox());
+        verticalLayout.add(getComboBox());
+
+        return verticalLayout;
+    }
+
+    ComboBox<String> getComboBox(){
+        ComboBox<String> comboBox = new ComboBox<>("Employee");
+        comboBox.setWidthFull();
+        comboBox.getStyle().set("--vaadin-combo-box-overlay-width", "350px");
+
+        ComboBox.ItemFilter<String> filter = this::matchesTerm;
+        comboBox.setItems(filter, Storage.MAP_SALARY.keySet());
+        comboBox.setItemLabelGenerator(person -> person);
+
+        return comboBox;
+    }
+
+
+    private boolean matchesTerm(String value, String searchTerm) {
+        return value.toLowerCase().contains(searchTerm.toLowerCase());
     }
 
     Tabs setUpTabs(String... tab){

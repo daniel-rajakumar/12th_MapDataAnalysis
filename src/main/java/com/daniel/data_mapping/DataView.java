@@ -31,11 +31,15 @@ import java.util.Set;
 @CssImport(value = "search-style.css")
 public class DataView extends VerticalLayout {
     Grid<String> grid = setUpGrid();
+    TextField textField = setUpTextField();
 
     public DataView() {
         setWidthFull();
         setHeightFull();
+        add(textField, grid);
+    }
 
+    TextField setUpTextField(){
         Set<String> people = Storage.MAP_SALARY.keySet();
         GridListDataView<String> dataView = grid.setItems(people);
 
@@ -68,8 +72,7 @@ public class DataView extends VerticalLayout {
 
         getElement().getStyle().set("padding-top", "100px");
 
-
-        add(searchField, grid);
+        return searchField;
     }
 
 
