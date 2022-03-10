@@ -45,7 +45,7 @@ public class ChartView extends HorizontalLayout {
         )).getElement());
 
 
-        UI.getCurrent().getPage().executeJs("ns.printMap($0, $1)"
+        UI.getCurrent().getPage().executeJs("ns.drawGraphs($0, $1)"
                     , new Gson().toJson(Storage.MAP_SALARY)
                     , new Gson().toJson(Storage.MAP_UNEMPLOYMENT)
         );

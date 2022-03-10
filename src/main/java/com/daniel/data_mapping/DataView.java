@@ -81,7 +81,7 @@ public class DataView extends VerticalLayout {
         Grid<String> grid = new Grid<>();
         grid.setItems(Storage.MAP_SALARY.keySet());
         grid.addColumn(key -> key)
-                .setHeader(customHeaderStyle("Starting Salary"))
+                .setHeader(customHeaderStyle("Major"))
                 .setFlexGrow(1)
                 .setSortable(true)
                 .setAutoWidth(true);

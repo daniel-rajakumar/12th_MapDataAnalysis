@@ -21,14 +21,19 @@ window.ns = {
         console.log(arr.length)
     },
 
-    printMap : function (map_salary, map_unemployment) {
-        drawChart(map_salary, map_unemployment)
+    drawGraphs : function (map_salary, map_unemployment) {
+        drawLinearRegGraph(map_salary, map_unemployment)
+        drawPieCharts(map_salary, map_unemployment)
     }
 
 
 }
 
-function drawChart(map_salary, map_unemployment){
+function drawPieCharts(map_salary, map_unemployment){
+
+}
+
+function drawLinearRegGraph(map_salary, map_unemployment){
     let map_1 = new Map(Object.entries(JSON.parse(map_salary)));
     let map_2 = new Map(Object.entries(JSON.parse(map_unemployment)));
     console.log(map_1);
@@ -91,7 +96,7 @@ function drawChart(map_salary, map_unemployment){
         target.selectAll('circle')
             .data(data)
             .enter().append('circle')
-            .attr('r', 3)
+            .attr('r', 5)
             .attr('cx', d => xScale(d.x))
             .attr('cy', d => yScale(d.y));
 
@@ -119,6 +124,5 @@ function drawChart(map_salary, map_unemployment){
 
 
     renderChart(svg)
-
 }
 
