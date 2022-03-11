@@ -6,11 +6,6 @@
     --five: #D2E8C3;
 }
 
-/*.my-border {*/
-/*    border: 2px solid var(--three);*/
-/*    !*border: #55BF3B s;*!*/
-/*}*/
-
 :host {
     background-color: var(--four);
     border: 30px solid var(--four);

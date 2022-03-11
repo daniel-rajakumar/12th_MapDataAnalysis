@@ -1,3 +1,7 @@
+/*
+    credit: https://www.d3-graph-gallery.com/graph/pie_changeData.html
+    https://observablehq.com/@hydrosquall/simple-linear-regression-scatterplot-with-d3
+ */
 window.ns = {
 
     drawLinearReg : function (map_one, map_two) {
@@ -205,12 +209,6 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .append("g")
         .attr("transform",
             "translate(" + margin.left + "," + -margin.top + ")")
-
-    // svg.append("text")
-    //     .attr("text-anchor", "end")
-    //     .attr("x", width/2 + margin.left)
-    //     .attr("y", height + margin.top + 20)
-    //     .text("sepal length");
 
 
     // X axis label:

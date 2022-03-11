@@ -16,10 +16,4 @@ public class Unemployment {
         return Float.parseFloat(word.substring(0, word.length() - 1));
     }
 
-    @Override
-    public String toString() {
-        return "Unemployment{" +
-                "unemployment_rate='" + unemployment_rate + '\'' +
-                '}';
-    }
 }
