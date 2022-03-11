@@ -1,27 +1,18 @@
 package com.daniel.data_mapping;
 
 import com.google.gson.Gson;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import java.awt.*;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 @PageTitle("Chart")
 @Route("chart")
@@ -36,7 +27,6 @@ import java.util.concurrent.atomic.AtomicReference;
 @CssImport("chart-style.css")
 public class ChartView extends HorizontalLayout {
     String[] tabTitles = {"Overview", "Compare"};
-    Component component_left, component_right;
     VerticalLayout layout_left, layout_right;
 
     public ChartView() {
@@ -61,7 +51,10 @@ public class ChartView extends HorizontalLayout {
         )).getElement());
 
 
-        UI.getCurrent().getPage().executeJs("ns.drawGraphs()");
+        UI.getCurrent().getPage().executeJs("ns.drawLinearReg($0, $1)"
+                , new Gson().toJson(Storage.MAP_SALARY)
+                , new Gson().toJson(Storage.MAP_UNEMPLOYMENT)
+        );
 
         return verticalLayout;
     }
@@ -72,8 +65,8 @@ public class ChartView extends HorizontalLayout {
         verticalLayout.setClassName("chart-vertical-layout");
         verticalLayout.setWidthFull();
 
-        ComboBox<String> one = getComboBox();
-        ComboBox<String> two = getComboBox();
+        ComboBox<String> one = getComboBox("Major 1");
+        ComboBox<String> two = getComboBox("Major 2");
 
         verticalLayout.add(one, two);
 
@@ -101,10 +94,9 @@ public class ChartView extends HorizontalLayout {
         });
     }
 
+    boolean isFirstTime = true;
     void updateChartIfValid(String one, String two){
         if (one == null || two == null) return;
-        Button button_one = new Button("one");
-        Button button_two = new Button("two");
 
         var obj_one = new LinkedHashMap<>();
         obj_one.put("salary", Storage.MAP_SALARY.get(one));
@@ -114,22 +106,43 @@ public class ChartView extends HorizontalLayout {
         obj_two.put("salary", Storage.MAP_SALARY.get(two));
         obj_two.put("unemployment", Storage.MAP_UNEMPLOYMENT.get(two));
 
-        layout_right.add(new HorizontalLayout(button_one, button_two));
-        button_one.addClickListener(e -> {
-            UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1)"
+        Button button_one = new Button("Salary");
+        Button button_two = new Button("Unemployment");
+
+        button_one.addClickListener(e ->  {
+            UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
+                    , new Gson().toJson(obj_one)
+                    , new Gson().toJson(obj_two)
+                    , true);
+        });
+
+        button_two.addClickListener(e ->  {
+            UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
+                    , new Gson().toJson(obj_one)
+                    , new Gson().toJson(obj_two)
+                    , false);
+        });
+
+        if (isFirstTime) {
+            layout_right.add(new HorizontalLayout(button_one, button_two));
+            UI.getCurrent().getPage().executeJs("ns.drawPie($0, $1)"
                     , new Gson().toJson(obj_one)
                     , new Gson().toJson(obj_two)
             );
-        });
-//
-        UI.getCurrent().getPage().executeJs("ns.drawPie($0, $1)"
-                , new Gson().toJson(obj_one)
-                , new Gson().toJson(obj_two)
-        );
+
+        } else {
+            UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
+                    , new Gson().toJson(obj_one)
+                    , new Gson().toJson(obj_two)
+                    , true);
+        }
+
+
+        isFirstTime = false;
     }
 
-    ComboBox<String> getComboBox(){
-        ComboBox<String> comboBox = new ComboBox<>("Employee");
+    ComboBox<String> getComboBox(String title){
+        ComboBox<String> comboBox = new ComboBox<>(title);
         comboBox.setWidthFull();
 
         comboBox.getStyle().set("--vaadin-combo-box-overlay-width", "350px");
@@ -143,30 +156,6 @@ public class ChartView extends HorizontalLayout {
 
     private boolean matchesTerm(String value, String searchTerm) {
         return value.toLowerCase().contains(searchTerm.toLowerCase());
-    }
-
-    Tabs setUpTabs(String... tab){
-        Tabs tabs = new Tabs();
-        tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.getElement().getStyle().set("margin-top", "85px");
-        tabs.getElement().getStyle().set("background-color", "#021721");
-//        tabs.setWidth("300px");
-        tabs.setWidth("300px");
-//        tabs.addSelectedChangeListener(e -> label1.setText(getTabInfo(e.getSelectedTab().getLabel())));
-        Arrays.stream(tab).forEach(e -> tabs.add(new Tab(e)));
-        return tabs;
-    }
-
-
-    String getTabInfo(String title){
-        switch (title){
-            case "Topic": return "Topic goes here";
-            case "Hypothesis": return "Hypothesis goes here";
-            case "Result": return "Result goes here";
-            case "Conclusion": return "Conclusion goes here";
-            case "Citation": return "Citation goes here";
-            default: return "";
-        }
     }
 
 }

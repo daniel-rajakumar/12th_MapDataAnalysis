@@ -1,32 +1,31 @@
-// import d3 from "https://d3js.org/d3.v7.min.js"
-// let dan = import jqfrom "https://code.jquery.com/jquery-3.6.0.min.js";
-// import jQuery from "https://code.jquery.com/jquery-3.6.0.min.js";
-
-// import {ss} from 'simple-statistics'
-
-
-import DOM from "d3/dist/d3";
-import ss from "simple-statistics";
-
 window.ns = {
-    toggle: function (element) {
-        console.log("element -> " + element)
-        jQuery(element).fadeToggle();
-        element.style.width = "50%"
-        element.style.height = "39px"
-        // element.setVisible(false)
-    },
 
-    printArray : function (arr) {
-        console.log(arr.length)
+    drawLinearReg : function (map_one, map_two) {
+        drawLinearRegGraph(map_one, map_two)
     },
 
     drawPie : function (one, two) {
-        drawPieCharts(one, two);
+        drawPieCharts();
+
+        ns.updatePie(one, two, true)
     },
 
-    updatePie : function (one, two){
-        console.log("wait")
+    updatePie : function (one, two, isDefault){
+        let map_1 = new Map(Object.entries(JSON.parse(one)));
+        let map_2 = new Map(Object.entries(JSON.parse(two)));
+
+        const data1 = {
+            one: map_1.get("salary").starting_salary,
+            two: map_2.get("salary").starting_salary,
+        }
+
+        const data2 = {
+            one: map_1.get("unemployment").unemployment_rate,
+            two: map_2.get("unemployment").unemployment_rate,
+        }
+
+        if (isDefault) update(data1)
+        else           update(data2)
     }
 
 
@@ -34,82 +33,75 @@ window.ns = {
 
 }
 
-function drawPieCharts(one, two) {
-    let map_1 = new Map(Object.entries(JSON.parse(one)));
-    let map_2 = new Map(Object.entries(JSON.parse(two)));
+function drawPieCharts() {
     // set the dimensions and margins of the graph
-    const width = 450
-    const height = 450
-    const margin = 40
+    const width = 500
+    const height = 500
 
-// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-    var radius = Math.min(width, height) / 2 - margin
-
-// append the svg object to the div called 'my_dataviz'
-    var svg = d3.select("#chart_pie")
+    // append the svg object to the div called 'my_dataviz'
+    d3.select("#chart_pie")
         .append("svg")
         .attr("width", width)
         .attr("height", height)
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+}
 
+function update(data) {
+    const width = 500
+    const height = 500
+    const margin = 40
 
-    // create 2 data_set
-    const data1 = {a: 9, b: 20, c:30, d:8, e:12}
-    const data2 = {a: 6, b: 16, c:20, d:14, e:19, f:12}
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    let radius = Math.min(width, height) / 2 - margin
 
     // set the color scale
     const color = d3.scaleOrdinal()
-        .domain(["a", "b", "c", "d", "e", "f"])
+        .domain(["salary", "unemployment"])
         .range(d3.schemeDark2);
 
-    function update(data) {
-        // Compute the position of each group on the pie:
-        const pie = d3.pie()
-            .value(function (d) {
-                return d.value;
-            })
-            .sort(function (a, b) {
-                console.log(a);
-                return d3.ascending(a.key, b.key);
-            });
+    // Compute the position of each group on the pie:
+    const pie = d3.pie()
+        .value(function (d) {
+            return d.value;
+        })
+        .sort(function (a, b) {
+            // console.log(a);
+            return d3.ascending(a.key, b.key);
+        });
 
 
-        // This make sure that group order remains the same in the pie chart
-        const data_ready = pie(d3.entries(data));
+    // This make sure that group order remains the same in the pie chart
+    const data_ready = pie(d3.entries(data));
 
-        console.log(data)
+    // console.log(data)
 
-        // map to data
-        const u = svg
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-            .selectAll("path")
-            .data(data_ready);
+    // map to data
+    const u = d3.selectAll("#chart_pie").select("svg").selectAll("g")
+                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+                    .selectAll("path")
+                    .data(data_ready);
 
-        // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-        u
-            .enter()
-            .append('path')
-            .merge(u)
-            .transition()
-            .duration(1000)
-            .attr('d', d3.arc()
-                .innerRadius(0)
-                .outerRadius(radius)
-            )
-            .attr('fill', function(d){ return(color(d.data.key)) })
-            .attr("stroke", "white")
-            .style("stroke-width", "2px")
-            .style("opacity", 1)
+    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+    u
+        .enter()
+        .append('path')
+        .merge(u)
+        .transition()
+        .duration(1000)
+        .attr('d', d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+        )
+        .attr('fill', function(d){ return(color(d.data.key)) })
+        .attr("stroke", "white")
+        .style("stroke-width", "2px")
+        .style("opacity", 1)
 
-        // remove the group that is not present anymore
-        u.exit()
-            .remove()
+    // remove the group that is not present anymore
+    u.exit()
+        .remove()
 
-    }
-
-
-    update(data2)
 }
 
 // A function that create / update the plot for a given variable:
@@ -166,7 +158,7 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         }));
     }
 
-    console.log(regressionPoints())
+    // console.log(regressionPoints())
 
     const line = d3.line()
         .x(d => xScale(d.x))
@@ -194,7 +186,7 @@ function drawLinearRegGraph(map_salary, map_unemployment){
             .call(xAxis);
         target.append('g')
             .call(yAxis);
-        
+
     }
 
 
@@ -203,7 +195,7 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        // .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    // .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 
     renderChart(svg)
