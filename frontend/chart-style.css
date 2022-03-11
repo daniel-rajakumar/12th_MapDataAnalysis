@@ -36,3 +36,9 @@ vaadin-tab {
     justify-content: center; /* Horizontal center alignment */
     text-align: center;
 }
+
+.axis {
+    font: 20px sans-serif;
+    fill: white;
+}
+

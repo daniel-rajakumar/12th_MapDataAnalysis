@@ -111,9 +111,8 @@ function update(data) {
 function drawLinearRegGraph(map_salary, map_unemployment){
     let map_1 = new Map(Object.entries(JSON.parse(map_salary)));
     let map_2 = new Map(Object.entries(JSON.parse(map_unemployment)));
-    console.log(map_1);
-    console.log(map_2);
-    const margin = ({ top: 20, right: 20, bottom: 20, left: 50 })
+
+    const margin = ({ top: 50, right: 20, bottom: 20, left: 50 })
     const height = 500
     const width = 1000
 
@@ -186,7 +185,6 @@ function drawLinearRegGraph(map_salary, map_unemployment){
             .call(xAxis);
         target.append('g')
             .call(yAxis);
-
     }
 
 
@@ -194,8 +192,34 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .append("svg")
         .attr("width", width)
         .attr("height", height)
+        .attr("padding", "400px")
         .append("g")
-    // .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        .attr("transform",
+            "translate(" + margin.left + "," + -margin.top + ")")
+
+    // svg.append("text")
+    //     .attr("text-anchor", "end")
+    //     .attr("x", width/2 + margin.left)
+    //     .attr("y", height + margin.top + 20)
+    //     .text("sepal length");
+
+
+    // X axis label:
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", width/2 + margin.left)
+        .attr("y", height + margin.top - 20)
+        .attr("class", "axis")
+        .text("Starting Salary ($)");
+
+    // Y axis label:
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("x", -margin.top - height/2 + 100)
+        .attr("class", "axis")
+        .text("Unemployment Rate (%)");
 
 
     renderChart(svg)
