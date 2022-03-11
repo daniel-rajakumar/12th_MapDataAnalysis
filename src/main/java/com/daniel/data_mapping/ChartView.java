@@ -95,6 +95,9 @@ public class ChartView extends HorizontalLayout {
         });
     }
 
+    Button button_one = new Button("Salary");
+    Button button_two = new Button("Unemployment");
+
     boolean isFirstTime = true;
     void updateChartIfValid(String one, String two){
         if (one == null || two == null) return;
@@ -107,24 +110,9 @@ public class ChartView extends HorizontalLayout {
         obj_two.put("salary", Storage.MAP_SALARY.get(two));
         obj_two.put("unemployment", Storage.MAP_UNEMPLOYMENT.get(two));
 
-        Button button_one = new Button("Salary");
-        Button button_two = new Button("Unemployment");
 
         layout_left.addClassName("toCenter");
 
-        button_one.addClickListener(e ->  {
-            UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
-                    , new Gson().toJson(obj_one)
-                    , new Gson().toJson(obj_two)
-                    , true);
-        });
-
-        button_two.addClickListener(e ->  {
-            UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
-                    , new Gson().toJson(obj_one)
-                    , new Gson().toJson(obj_two)
-                    , false);
-        });
 
         if (isFirstTime) {
             HorizontalLayout horizontalLayout = new HorizontalLayout(button_one, button_two);
@@ -135,6 +123,19 @@ public class ChartView extends HorizontalLayout {
                     , new Gson().toJson(obj_two)
             );
 
+            button_one.addClickListener(e ->  {
+                UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
+                        , new Gson().toJson(obj_one)
+                        , new Gson().toJson(obj_two)
+                        , true);
+            });
+
+            button_two.addClickListener(e ->  {
+                UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
+                        , new Gson().toJson(obj_one)
+                        , new Gson().toJson(obj_two)
+                        , false);
+            });
         } else {
             UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
                     , new Gson().toJson(obj_one)
