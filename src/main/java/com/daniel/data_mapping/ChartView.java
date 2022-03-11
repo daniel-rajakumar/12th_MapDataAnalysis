@@ -27,16 +27,16 @@ import java.util.LinkedHashMap;
 @CssImport("chart-style.css")
 public class ChartView extends HorizontalLayout {
     String[] tabTitles = {"Overview", "Compare"};
-    VerticalLayout layout_left, layout_right;
+    VerticalLayout layout_right, layout_left;
 
     public ChartView() {
         setSizeFull();
-        layout_left = getLeftLayout();
-        layout_right = getRightLayout();
+        layout_right = getLeftLayout();
+        layout_left = getRightLayout();
 
         add(
-                layout_right,
-                layout_left
+                layout_left,
+                layout_right
         );
 
     }
@@ -50,6 +50,7 @@ public class ChartView extends HorizontalLayout {
                 "<div class=\"chart\"></div>"
         )).getElement());
 
+        verticalLayout.addClassName("toCenter");
 
         UI.getCurrent().getPage().executeJs("ns.drawLinearReg($0, $1)"
                 , new Gson().toJson(Storage.MAP_SALARY)
@@ -109,6 +110,8 @@ public class ChartView extends HorizontalLayout {
         Button button_one = new Button("Salary");
         Button button_two = new Button("Unemployment");
 
+        layout_left.addClassName("toCenter");
+
         button_one.addClickListener(e ->  {
             UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
                     , new Gson().toJson(obj_one)
@@ -124,7 +127,9 @@ public class ChartView extends HorizontalLayout {
         });
 
         if (isFirstTime) {
-            layout_right.add(new HorizontalLayout(button_one, button_two));
+            HorizontalLayout horizontalLayout = new HorizontalLayout(button_one, button_two);
+            horizontalLayout.addClassName("toCenter");
+            layout_left.add(horizontalLayout);
             UI.getCurrent().getPage().executeJs("ns.drawPie($0, $1)"
                     , new Gson().toJson(obj_one)
                     , new Gson().toJson(obj_two)

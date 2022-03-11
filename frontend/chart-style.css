@@ -28,3 +28,11 @@ vaadin-tab {
     padding: 25px;
     background-color: var(--three);
 }
+
+
+.toCenter {
+    display: flex;
+    align-items: center; /* Vertical center alignment */
+    justify-content: center; /* Horizontal center alignment */
+    text-align: center;
+}
