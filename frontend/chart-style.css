@@ -42,3 +42,15 @@ vaadin-tab {
     fill: white;
 }
 
+
+vaadin-combo-box, label {
+    color: var(--five);
+    font: 20px sans-serif;
+}
+
+.toCenter vaadin-button {
+    color: var(--five);
+    background-color: var(--two);
+}
+
+
