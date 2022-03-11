@@ -1,18 +1,11 @@
 package com.daniel.data_mapping;
 
-import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.Unit;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -57,11 +50,13 @@ public class HomeView extends FlexLayout {
 
     String getTabInfo(String title){
         switch (title){
-            case "Topic": return "Topic goes here";
-            case "Hypothesis": return "Hypothesis goes here";
-            case "Result": return "Result goes here";
-            case "Conclusion": return "Conclusion goes here";
-            case "Citation": return "Citation goes here";
+            case "Topic": return "Relationship between Starting salary of College Majors vs Unemployment rate of College Majors.";
+            case "Hypothesis": return "The higher the starting salary of a college major is, the higher the unemployment due to demand. ";
+            case "Result": return "I used linear regression to analyze my data sets (x is salary and y is unemployment rate). Visualizing the data shows that there is hardly any relationship between starting salary and the unemployment of a college major as the data plots are all over the graphs. ";
+            case "Conclusion": return "My hypothesis was proven to be incorrect based on the data analysis outcomes. Therefore, I can conclude that there is no relationship between the starting salary of a major vs its unemployment.  I could have gotten data from the same year in order to find the most accurate conclusion. There are many factors that play a role in the unemployment of a major, for example, the type of college the graduate attended or the location.";
+            case "Citation": return "Exploration of College Salaries by Major | Kaggle\n\n" +
+                    "The Labor Market for Recent College Graduates - FEDERAL RESERVE BANK of NEW YORK (newyorkfed.org)\n\n" +
+                    "One potential issue from my two datasets is the gaps between the two datasets. The salary dataset is from 2017 while the unemployment rate was last updated in 2021. This could have played a little role in the data analysis; however, it is highly doubtful that the outcome of my conclusion would have been changed, otherwise. ";
             default: return "";
         }
     }

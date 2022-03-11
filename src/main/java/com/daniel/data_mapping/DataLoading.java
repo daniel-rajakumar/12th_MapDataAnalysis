@@ -1,15 +1,9 @@
 package com.daniel.data_mapping;
 
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.value.ValueChangeMode;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Map;
 
 public class DataLoading {
 
@@ -23,9 +17,6 @@ public class DataLoading {
             setup_dataSetOne();
             setup_dataSetTwo();
             dataCleanUp();
-            Storage.MAP_SALARY.forEach((k, v) -> System.out.println(k + ": " + v));
-            System.out.println("\n\n");
-            Storage.MAP_UNEMPLOYMENT.forEach((k, v) -> System.out.println(k + ": " + v));
         } catch (IOException e) { e.printStackTrace(); }
     }
 

@@ -26,7 +26,6 @@ import java.util.LinkedHashMap;
 )
 @CssImport("chart-style.css")
 public class ChartView extends HorizontalLayout {
-    String[] tabTitles = {"Overview", "Compare"};
     VerticalLayout layout_right, layout_left;
 
     public ChartView() {

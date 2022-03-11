@@ -3,11 +3,6 @@ package com.daniel.data_mapping;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
 @SpringBootApplication
 public class DataMappingApplication {
 

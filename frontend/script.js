@@ -15,13 +15,13 @@ window.ns = {
         let map_2 = new Map(Object.entries(JSON.parse(two)));
 
         const data1 = {
-            one: map_1.get("salary").starting_salary,
-            two: map_2.get("salary").starting_salary,
+            major_1: map_1.get("salary").starting_salary,
+            major_2: map_2.get("salary").starting_salary,
         }
 
         const data2 = {
-            one: map_1.get("unemployment").unemployment_rate,
-            two: map_2.get("unemployment").unemployment_rate,
+            major_1: map_1.get("unemployment").unemployment_rate,
+            major_2: map_2.get("unemployment").unemployment_rate,
         }
 
         if (isDefault) update(data1)
@@ -82,6 +82,9 @@ function update(data) {
                     .selectAll("path")
                     .data(data_ready);
 
+    const arcGenerator = d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius)
     // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
     u
         .enter()
@@ -89,14 +92,20 @@ function update(data) {
         .merge(u)
         .transition()
         .duration(1000)
-        .attr('d', d3.arc()
-            .innerRadius(0)
-            .outerRadius(radius)
-        )
+        .attr('d', arcGenerator )
         .attr('fill', function(d){ return(color(d.data.key)) })
         .attr("stroke", "white")
         .style("stroke-width", "2px")
         .style("opacity", 1)
+
+    u
+        .data(data_ready)
+        .enter()
+        .append('text')
+        .text(function(d){ return d.data.key})
+        .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+        .style("text-anchor", "middle")
+        .style("font-size", 17)
 
     // remove the group that is not present anymore
     u.exit()
