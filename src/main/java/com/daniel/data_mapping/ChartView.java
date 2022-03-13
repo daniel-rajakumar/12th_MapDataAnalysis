@@ -101,6 +101,9 @@ public class ChartView extends HorizontalLayout {
     void updateChartIfValid(String one, String two){
         if (one == null || two == null) return;
 
+        System.out.println("one: " + one);
+        System.out.println("two: " + two);
+
         var obj_one = new LinkedHashMap<>();
         obj_one.put("salary", Storage.MAP_SALARY.get(one));
         obj_one.put("unemployment", Storage.MAP_UNEMPLOYMENT.get(one));
@@ -121,26 +124,26 @@ public class ChartView extends HorizontalLayout {
                     , new Gson().toJson(obj_one)
                     , new Gson().toJson(obj_two)
             );
-
-            button_one.addClickListener(e ->  {
-                UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
-                        , new Gson().toJson(obj_one)
-                        , new Gson().toJson(obj_two)
-                        , true);
-            });
-
-            button_two.addClickListener(e ->  {
-                UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
-                        , new Gson().toJson(obj_one)
-                        , new Gson().toJson(obj_two)
-                        , false);
-            });
         } else {
             UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
                     , new Gson().toJson(obj_one)
                     , new Gson().toJson(obj_two)
                     , true);
         }
+
+        button_one.addClickListener(e ->  {
+            UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
+                    , new Gson().toJson(obj_one)
+                    , new Gson().toJson(obj_two)
+                    , true);
+        });
+
+        button_two.addClickListener(e ->  {
+            UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
+                    , new Gson().toJson(obj_one)
+                    , new Gson().toJson(obj_two)
+                    , false);
+        });
 
 
         isFirstTime = false;

@@ -18,6 +18,7 @@ window.ns = {
         let map_1 = new Map(Object.entries(JSON.parse(one)));
         let map_2 = new Map(Object.entries(JSON.parse(two)));
 
+
         const data1 = {
             major_1: map_1.get("salary").starting_salary,
             major_2: map_2.get("salary").starting_salary,
@@ -28,6 +29,11 @@ window.ns = {
             major_2: map_2.get("unemployment").unemployment_rate,
         }
 
+        console.log(map_1)
+        console.log(map_2)
+        console.log(data1)
+        console.log(data2)
+
         if (isDefault) update(data1)
         else           update(data2)
     }
@@ -37,35 +43,45 @@ window.ns = {
 
 }
 
+
+const pie = {
+    width: 500,
+    height:500,
+    margin: 40
+}
+
 function drawPieCharts() {
     // set the dimensions and margins of the graph
-    const width = 500
-    const height = 500
-
     // append the svg object to the div called 'my_dataviz'
     d3.select("#chart_pie")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", pie.width)
+        .attr("height", pie.height)
         .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        .attr("transform", "translate(" + pie.width / 2 + "," + pie.height / 2 + ")");
+
 }
 
-function update(data) {
-    const width = 500
-    const height = 500
-    const margin = 40
 
-    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-    let radius = Math.min(width, height) / 2 - margin
+
+
+
+
+const local = d3.local();
+function update(data) {
+    const radius = Math.min(pie.width, pie.height) / 2 - pie.margin
 
     // set the color scale
     const color = d3.scaleOrdinal()
         .domain(["salary", "unemployment"])
         .range(d3.schemeDark2);
 
+    const arc = d3.arc()
+        .innerRadius(0)
+        .outerRadius(radius)
+
     // Compute the position of each group on the pie:
-    const pie = d3.pie()
+    const d3pie = d3.pie()
         .value(function (d) {
             return d.value;
         })
@@ -76,48 +92,56 @@ function update(data) {
 
 
     // This make sure that group order remains the same in the pie chart
-    const data_ready = pie(d3.entries(data));
+    const data_ready = d3pie(d3.entries(data));
 
     // console.log(data)
 
     // map to data
     const u = d3.selectAll("#chart_pie").select("svg").selectAll("g")
-                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+                    // .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
                     .selectAll("path")
                     .data(data_ready);
 
-    const arcGenerator = d3.arc()
-            .innerRadius(0)
-            .outerRadius(radius)
+
+
     // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
     u
         .enter()
         .append('path')
+        .each(function(d) {
+            local.set(this, d)
+        })
         .merge(u)
         .transition()
         .duration(1000)
-        .attr('d', arcGenerator )
-        .attr('fill', function(d){ return(color(d.data.key)) })
+        .attrTween('d', function(d) {
+            const i = d3.interpolate(local.get(this), d);
+            local.set(this, i(0));
+            return function(t) {
+                return arc(i(t));
+            };
+        })
+        .attr('fill', function(d){
+            return(color(d.data.key))
+        })
         .attr("stroke", "white")
         .style("stroke-width", "2px")
         .style("opacity", 1)
 
-    u
-        .data(data_ready)
-        .enter()
-        .append('text')
-        .text(function(d){ return d.data.key})
-        .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
-        .style("text-anchor", "middle")
-        .style("font-size", 17)
+    // u
+    //     .data(data_ready)
+    //     .enter()
+    //     .append('text')
+    //     .text(function(d){ return d.data.key})
+    //     .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+    //     .style("text-anchor", "middle")
+    //     .style("font-size", 17)
 
     // remove the group that is not present anymore
     u.exit()
         .remove()
 
 }
-
-// A function that create / update the plot for a given variable:
 
 
 
