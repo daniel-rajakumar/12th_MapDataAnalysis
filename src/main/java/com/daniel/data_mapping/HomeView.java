@@ -12,7 +12,7 @@ import com.vaadin.flow.router.Route;
 import java.util.Arrays;
 
 @PageTitle("Home")
-@Route("home")
+@Route("")
 @JsModule("./script.js")
 @JsModule("./headerScript.js")
 @CssImport(value = "home-style.css")

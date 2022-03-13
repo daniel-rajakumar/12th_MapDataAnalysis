@@ -18,27 +18,21 @@ window.ns = {
 
     updatePie : function (one, two, isDefault){
         isSalary = isDefault;
-        let map_1 = new Map(Object.entries(JSON.parse(one)));
-        let map_2 = new Map(Object.entries(JSON.parse(two)));
+        let map_1 = new Map(Object.entries(JSON.parse(two)));
+        let map_2 = new Map(Object.entries(JSON.parse(one)));
 
 
         const data1 = {
-            major_2: map_1.get("salary").starting_salary,
-            major_1: map_2.get("salary").starting_salary,
+            left: map_1.get("salary").starting_salary,
+            right: map_2.get("salary").starting_salary,
         }
 
         const data2 = {
-            major_2: map_1.get("unemployment").unemployment_rate,
-            major_1: map_2.get("unemployment").unemployment_rate,
+            left: map_1.get("unemployment").unemployment_rate,
+            right: map_2.get("unemployment").unemployment_rate,
         }
 
-        // console.log(map_1)
-        // console.log(map_2)
-        // console.log(data1)
-        // console.log(data2)
-
-        if (isDefault) update(data1)
-        else           update(data2)
+        update(isDefault ? data1 : data2)
     }
 
 
