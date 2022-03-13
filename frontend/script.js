@@ -23,13 +23,13 @@ window.ns = {
 
 
         const data1 = {
-            major_1: map_1.get("salary").starting_salary,
-            major_2: map_2.get("salary").starting_salary,
+            major_2: map_1.get("salary").starting_salary,
+            major_1: map_2.get("salary").starting_salary,
         }
 
         const data2 = {
-            major_1: map_1.get("unemployment").unemployment_rate,
-            major_2: map_2.get("unemployment").unemployment_rate,
+            major_2: map_1.get("unemployment").unemployment_rate,
+            major_1: map_2.get("unemployment").unemployment_rate,
         }
 
         // console.log(map_1)

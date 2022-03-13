@@ -12,6 +12,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Set;
 
 @PageTitle("Home")
@@ -82,7 +84,7 @@ public class DataView extends VerticalLayout {
                 .setSortable(true)
                 .setAutoWidth(true);
 
-        grid.addColumn(key -> "$ " + Storage.MAP_SALARY.get(key).getStarting_salary())
+        grid.addColumn(key -> toCurrencyFormat(Storage.MAP_SALARY.get(key).getStarting_salary()))
                 .setHeader("Starting Salary")
                 .setFlexGrow(1)
                 .setSortable(true)
@@ -98,6 +100,11 @@ public class DataView extends VerticalLayout {
 //            new Notification(String.valueOf(System.currentTimeMillis())).open();
         });
         return grid;
+    }
+
+    String toCurrencyFormat(float amount){
+        return "$ " + NumberFormat.getCurrencyInstance(new Locale("en", "US"))
+                .format(amount).substring(1);
     }
 
 }
