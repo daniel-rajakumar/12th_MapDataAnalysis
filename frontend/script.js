@@ -2,6 +2,8 @@
     credit: https://www.d3-graph-gallery.com/graph/pie_changeData.html
     https://observablehq.com/@hydrosquall/simple-linear-regression-scatterplot-with-d3
  */
+
+let isSalary;
 window.ns = {
 
     drawLinearReg : function (map_one, map_two) {
@@ -15,6 +17,7 @@ window.ns = {
     },
 
     updatePie : function (one, two, isDefault){
+        isSalary = isDefault;
         let map_1 = new Map(Object.entries(JSON.parse(one)));
         let map_2 = new Map(Object.entries(JSON.parse(two)));
 
@@ -29,10 +32,10 @@ window.ns = {
             major_2: map_2.get("unemployment").unemployment_rate,
         }
 
-        console.log(map_1)
-        console.log(map_2)
-        console.log(data1)
-        console.log(data2)
+        // console.log(map_1)
+        // console.log(map_2)
+        // console.log(data1)
+        // console.log(data2)
 
         if (isDefault) update(data1)
         else           update(data2)
@@ -97,11 +100,10 @@ function update(data) {
     // console.log(data)
 
     // map to data
-    const u = d3.selectAll("#chart_pie").select("svg").selectAll("g")
+    let u = d3.selectAll("#chart_pie").select("svg").selectAll("g")
                     // .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
                     .selectAll("path")
                     .data(data_ready);
-
 
 
     // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
@@ -128,6 +130,36 @@ function update(data) {
         .style("stroke-width", "2px")
         .style("opacity", 1)
 
+    // add text
+     u = d3.selectAll('.pieText').node()
+        ? d3.selectAll('.pieText')
+        : u.enter().append('text').attr("class", "pieText")
+
+    u
+        .data(data_ready)
+        .transition()
+        .duration(1000)
+        .attr("transform", function(d) {
+            d.innerRadius = radius
+            return "translate(" +  arc.centroid(d) + ")";
+        })
+        .style("text-anchor", "middle")
+        .attr("dy", "0.66em")
+        .text(function(d) {
+            console.log(isSalary)
+            if (isSalary) {
+                const money = d.value.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                });
+
+                console.log(money)
+                return money.slice(0, -3);
+            } else{
+                return d.value + "%";
+            }
+        });
+
     // u
     //     .data(data_ready)
     //     .enter()
@@ -144,6 +176,9 @@ function update(data) {
 }
 
 
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
 function drawLinearRegGraph(map_salary, map_unemployment){
     let map_1 = new Map(Object.entries(JSON.parse(map_salary)));
