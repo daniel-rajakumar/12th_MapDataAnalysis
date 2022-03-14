@@ -7,8 +7,10 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -30,8 +32,8 @@ public class ChartView extends HorizontalLayout {
 
     public ChartView() {
         setSizeFull();
-        layout_right = getLeftLayout();
-        layout_left = getRightLayout();
+        layout_right = getRightLayout();
+        layout_left = getLeftLayout();
 
         add(
                 layout_left,
@@ -40,11 +42,15 @@ public class ChartView extends HorizontalLayout {
 
     }
 
-    VerticalLayout getLeftLayout(){
+    VerticalLayout getRightLayout(){
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setClassName("chart-vertical-layout");
         verticalLayout.setWidthFull();
 
+        Label label = new Label("College Major Starting Salary verses College Major Unemployment Rate");
+        label.getElement().getStyle().set("color", "white");
+        label.getElement().getStyle().set("font-size", "1.5em");
+        verticalLayout.add(label);
         verticalLayout.getElement().appendChild((new Html(
                 "<div class=\"chart\"></div>"
         )).getElement());
@@ -60,7 +66,7 @@ public class ChartView extends HorizontalLayout {
     }
 
 
-    VerticalLayout getRightLayout(){
+    VerticalLayout getLeftLayout(){
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setClassName("chart-vertical-layout");
         verticalLayout.setWidthFull();

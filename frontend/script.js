@@ -182,10 +182,11 @@ function drawLinearRegGraph(map_salary, map_unemployment){
     const height = 500
     const width = 1000
 
-    const data = require('lodash').zipWith(Array.from(map_1.values()), Array.from(map_2.values()),
-        (salary, unemployment) => ({
+    const data = require('lodash').zipWith(Array.from(map_1.values()), Array.from(map_2.values()), Array.from(map_2.keys()),
+        (salary, unemployment, name) => ({
             x: salary.starting_salary,
-            y: unemployment.unemployment_rate
+            y: unemployment.unemployment_rate,
+            z: name
         })
     )
 
@@ -230,6 +231,7 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .y(d => yScale(d.y))
 
     const tooltip = d3.select(".chart")
+        // .data(data)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -237,28 +239,30 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .style("border", "solid")
         .style("border-width", "1px")
         .style("border-radius", "5px")
+        .style("font-size", "1.5em")
 
 
 
     // A function that change this tooltip when the user hover a point.
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
 
-    const mouseover = function(d) {
+    const mouseover = function() {
         tooltip
             .style("opacity", 1)
+            .style("padding", "10px")
     }
 
 
-    const mousemove = function(d) {
+    const mousemove = function(d, i) {
         tooltip
-            .html(d)
+            .html(i.z)
             .style("position", "absolute")
-            .style("top", (d.pageY - 35) + "px")
-            .style("left", (d.pageX + 5) + "px")
+            .style("top", (d.pageY - 60) + "px")
+            .style("left", (d.pageX + 10) + "px")
     }
 
     // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
-    const mouseleave = function(d) {
+    const mouseleave = function() {
         tooltip
             .transition()
             .duration(200)
@@ -319,7 +323,6 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .attr("x", -margin.top - height/2 + 100)
         .attr("class", "axis")
         .text("Unemployment Rate (%)");
-
 
     renderChart(svg)
 }
