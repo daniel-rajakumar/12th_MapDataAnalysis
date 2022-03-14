@@ -118,6 +118,7 @@
     "construct-style-sheets-polyfill": "3.0.4",
     "d3": "^7.3.0",
     "d3-regression": "^1.3.10",
+    "d3-selection": "^3.0.0",
     "date-fns": "2.23.0",
     "lit": "2.1.4",
     "simple-statistics": "^7.7.5"
@@ -288,7 +289,7 @@
       "workbox-precaching": "6.4.2",
       "workbox-webpack-plugin": "6.4.2"
     },
-    "hash": "79640ae3258861493ef5e42eb10ecbb8e963ce5ec017570c87f9d2c599f8ef9c"
+    "hash": "baf82171af5a9df6ec837d0ae5d553b839a567eedd4813264a6ac23fb6739ac2"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -408,6 +409,7 @@
     "date-fns": "$date-fns",
     "d3": "$d3",
     "d3-regression": "$d3-regression",
-    "simple-statistics": "$simple-statistics"
+    "simple-statistics": "$simple-statistics",
+    "d3-selection": "$d3-selection"
   }
 }

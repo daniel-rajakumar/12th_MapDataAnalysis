@@ -212,7 +212,7 @@ function drawLinearRegGraph(map_salary, map_unemployment){
     const linearRegressionLine = ss.linearRegressionLine(linearRegression)
 
 
-    const regressionPoints = function(){
+    const regressionPoints = () => {
         const firstX = d3.min(data, d => d.x);
         const lastX =  d3.max(data, d => d.x);
         const xCoordinates = [firstX, lastX];
@@ -229,6 +229,42 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .x(d => xScale(d.x))
         .y(d => yScale(d.y))
 
+    const tooltip = d3.select(".chart")
+        .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "1px")
+        .style("border-radius", "5px")
+
+
+
+    // A function that change this tooltip when the user hover a point.
+    // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+
+    const mouseover = function(d) {
+        tooltip
+            .style("opacity", 1)
+    }
+
+
+    const mousemove = function(d) {
+        tooltip
+            .html(d)
+            .style("position", "absolute")
+            .style("top", (d.pageY - 35) + "px")
+            .style("left", (d.pageX + 5) + "px")
+    }
+
+    // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+    const mouseleave = function(d) {
+        tooltip
+            .transition()
+            .duration(200)
+            .style("opacity", 0)
+    }
+
 
     const renderChart = (target) => {
 
@@ -236,9 +272,12 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         target.selectAll('circle')
             .data(data)
             .enter().append('circle')
-            .attr('r', 5)
+            .attr('r', 7)
             .attr('cx', d => xScale(d.x))
-            .attr('cy', d => yScale(d.y));
+            .attr('cy', d => yScale(d.y))
+            .on("mouseover", mouseover )
+            .on("mousemove", mousemove )
+            .on("mouseleave", mouseleave )
 
         // Next, we'll draw the regression line
         target.append('path')
