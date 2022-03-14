@@ -96,9 +96,6 @@ public class DataView extends VerticalLayout {
                 .setSortable(true)
                 .setAutoWidth(true);
 
-        grid.addSortListener(e -> {
-//            new Notification(String.valueOf(System.currentTimeMillis())).open();
-        });
         return grid;
     }
 

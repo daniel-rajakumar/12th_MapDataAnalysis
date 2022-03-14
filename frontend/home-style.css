@@ -52,3 +52,8 @@ vaadin-tab {
     word-wrap: break-word; /* IE  */
     white-space: -moz-pre-wrap; /* Firefox */
 }
+
+
+input {
+    color: var(--five);
+}

@@ -18,7 +18,7 @@ import java.util.Arrays;
 @JsModule("./headerScript.js")
 @CssImport(value = "home-style.css")
 public class HomeView extends FlexLayout {
-    String[] tabTitles = {"Topic", "Hypothesis", "Result", "Conclusion", "Citation"};
+    String[] tabTitles = {"Topic", "Hypothesis", "Citation", "Result", "Conclusion"};
     Span label;
 
     public HomeView() {
@@ -54,13 +54,16 @@ public class HomeView extends FlexLayout {
     String getTabInfo(String title){
         switch (title){
             case "Topic": return "Relationship between Starting salary of College Majors vs Unemployment rate of College Majors.";
-            case "Hypothesis": return "The higher the starting salary of a college major is, the higher the unemployment due to demand. ";
-            case "Result": return "I used linear regression to analyze my data sets (x is salary and y is unemployment rate). Visualizing the data shows that there is hardly any relationship between starting salary and the unemployment of a college major as the data plots are all over the graphs. ";
+            case "Hypothesis": return "The higher the starting salary of a college major is, the higher the unemployment. ";
+            case "Result": return "I used linear regression to analyze my data sets (x is salary and y is unemployment rate). <br> Visualizing the data shows that there is hardly any relationship between starting salary and the unemployment of a college major as the data plots are all over the graphs. ";
             case "Conclusion": return "My hypothesis was proven to be incorrect based on the data analysis outcomes. Therefore, I can conclude that there is no relationship between the starting salary of a major vs its unemployment.  I could have gotten data from the same year in order to find the most accurate conclusion. There are many factors that play a role in the unemployment of a major, for example, the type of college the graduate attended or the location.";
-            case "Citation": return "[First dataset: Kaggle] <br> [Second dataset: newyorkfed.org]  <br>" +
+            case "Citation": return
+                    "[First dataset: Kaggle.com] <br> " +
+                    "[Second dataset: newyorkfed.org] <br>" +
                     "One potential issue from my two datasets is the gaps between the two datasets. The salary dataset is from 2017 while the unemployment rate was last updated in 2021. This could have played a little role in the data analysis; however, it is highly doubtful that the outcome of my conclusion would have been changed, otherwise. ";
             default: return "";
         }
+
     }
 
 
