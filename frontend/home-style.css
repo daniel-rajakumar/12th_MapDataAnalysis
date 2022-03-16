@@ -57,3 +57,8 @@ vaadin-tab {
 input {
     color: var(--five);
 }
+
+
+.cite {
+    display: contents;
+}

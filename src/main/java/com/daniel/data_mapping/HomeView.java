@@ -58,8 +58,8 @@ public class HomeView extends FlexLayout {
             case "Result": return "I used linear regression to analyze my data sets (x is salary and y is unemployment rate). <br> Visualizing the data shows that there is hardly any relationship between starting salary and the unemployment of a college major as the data plots are all over the graphs. ";
             case "Conclusion": return "My hypothesis was proven to be incorrect based on the data analysis outcomes. Therefore, I can conclude that there is no relationship between the starting salary of a major vs its unemployment.  I could have gotten data from the same year in order to find the most accurate conclusion. There are many factors that play a role in the unemployment of a major, for example, the type of college the graduate attended or the location.";
             case "Citation": return
-                    "[First dataset: Kaggle.com] <br> " +
-                    "[Second dataset: newyorkfed.org] <br>" +
+                    "[First dataset: <a class=\"cite\" target=\"_blank\" href=\"https://www.kaggle.com/cdelany7/exploration-of-college-salaries-by-major/data\"> Kaggle.com </a>] <br> " +
+                    "[Second dataset: <a class=\"cite\" target=\"_blank\" href=\"https://www.newyorkfed.org/research/college-labor-market/college-labor-market_compare-majors.html\"> newyorkfed.org </a>] <br>" +
                     "One potential issue from my two datasets is the gaps between the two datasets. The salary dataset is from 2017 while the unemployment rate was last updated in 2021. This could have played a little role in the data analysis; however, it is highly doubtful that the outcome of my conclusion would have been changed, otherwise. ";
             default: return "";
         }
