@@ -62,3 +62,8 @@ input {
 .cite {
     display: contents;
 }
+
+.qrCode {
+    width: 700px;
+    height: 700px;
+}
