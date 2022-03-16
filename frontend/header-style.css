@@ -69,7 +69,7 @@
 
 /* Update header text based on sorting property */
 vaadin-grid-sorter {
-    font-size: 30px;
+    font-size: 40px;
 }
 
 vaadin-grid-sorter[direction = "asc"] {

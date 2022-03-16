@@ -52,9 +52,9 @@ public class HomeView extends FlexLayout {
 
     String getTabInfo(String title){
         switch (title){
-            case "Topic": return "Relationship between Starting salary of College Majors vs Unemployment rate of College Majors.";
-            case "Hypothesis": return "The higher the starting salary of a college major is, the higher the unemployment. ";
-            case "Poll": return "<img class=\"qrCode\" src=\"https://raw.githubusercontent.com/kingDaniel2004/12th_MapDataAnalysis/bafb0400b2ba939ca45f4dc476577e26373a3ea9/res/code.png\" alt=\"QRCode\">";
+            case "Topic": return "Starting Salary of College Majors vs Unemployment Rate of College Majors.";
+            case "Hypothesis": return "The higher the starting salary of a college major is, the higher the unemployment rate.";
+            case "Poll": return "<img class=\"qrCode\" src=\"https://github.com/kingDaniel2004/12th_MapDataAnalysis/blob/e1980c106e81a0161c2236b65b22417467e43d69/res/code.png\" alt=\"QRCode\">";
             case "Result": return "I used linear regression to analyze my data sets (x is salary and y is unemployment rate). <br> Visualizing the data shows that there is hardly any relationship between starting salary and the unemployment of a college major as the data plots are all over the graphs. ";
             case "Conclusion": return "My hypothesis was proven to be incorrect based on the data analysis outcomes. Therefore, I can conclude that there is no relationship between the starting salary of a major vs its unemployment.  I could have gotten data from the same year in order to find the most accurate conclusion. There are many factors that play a role in the unemployment of a major, for example, the type of college the graduate attended or the location.";
             case "Citation": return

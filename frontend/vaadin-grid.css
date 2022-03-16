@@ -14,7 +14,7 @@
 [part~="cell"] {
     background-color: var(--one);
     color: var(--five);
-    font-size: x-large;
+    font-size: xx-large;
 }
 
 [part~="header-cell"] {
