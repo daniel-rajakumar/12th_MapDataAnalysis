@@ -277,8 +277,6 @@ function drawLinearRegGraph(map_salary, map_unemployment){
             .data(data)
             .enter().append('circle')
             .attr('r', 7)
-            .attr('cx', d => xScale(d.x))
-            .attr('cy', d => yScale(d.y))
             .on("mouseover", mouseover )
             .on("mousemove", mousemove )
             .on("mouseleave", mouseleave )
@@ -294,6 +292,14 @@ function drawLinearRegGraph(map_salary, map_unemployment){
             .call(xAxis);
         target.append('g')
             .call(yAxis);
+
+
+        target.selectAll("circle")
+            .transition()
+            .duration(2000)
+            .attr('cx', d => xScale(d.x))
+            .attr('cy', d => yScale(d.y))
+
     }
 
 
