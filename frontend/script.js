@@ -159,7 +159,6 @@ function update(data) {
     // remove the group that is not present anymore
     u.exit()
         .remove()
-
 }
 
 
