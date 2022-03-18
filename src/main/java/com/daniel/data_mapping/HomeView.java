@@ -37,6 +37,7 @@ public class HomeView extends FlexLayout {
         return span;
     }
 
+    // side bar on the homepage
     Tabs setUpTabs(String... tab){
         Tabs tabs = new Tabs();
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
@@ -67,7 +68,6 @@ public class HomeView extends FlexLayout {
                     "[First dataset: <a class=\"cite\" target=\"_blank\" href=\"https://www.kaggle.com/cdelany7/exploration-of-college-salaries-by-major/data\"> Kaggle.com </a>] <br> " +
                     "[Second dataset: <a class=\"cite\" target=\"_blank\" href=\"https://www.newyorkfed.org/research/college-labor-market/college-labor-market_compare-majors.html\"> newyorkfed.org </a>] <br>" +
                     "One potential issue from my two datasets is the gaps between the two datasets. The salary dataset is from 2017 while the unemployment rate was last updated in 2021. This could have played a little role in the data analysis; however, it is highly doubtful that the outcome of my conclusion would have been changed, otherwise. ";
-//            case "End": return "<iframe src = \"https://forms.office.com/pages/designpagev2.aspx?auth_pvr=WindowsLiveId&auth_upn=danielelvisr%40outlook.com&origin=OfficeDotCom&lang=en-US&sessionid=0232cda8-9673-4af3-8fcf-59b324198eca&route=Start&subpage=design&id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAR4bfJxUM1JOTUtNQkpEUEtYTFdZM0s1QzNOUjFRNy4u&analysis=true&branchingelementid=r0c9a6b29331743f29df45a0062b9c0ba&tab=0\" width=\"600px\" height=\"600px\"> </iframe>";
 
             default: return "";
         }

@@ -35,7 +35,10 @@ public class DataView extends VerticalLayout {
     public DataView() {
         setWidthFull();
         setHeightFull();
-        add(textField, grid);
+        add(
+                textField,
+                grid
+        );
     }
 
     TextField setUpTextField(){
@@ -75,6 +78,7 @@ public class DataView extends VerticalLayout {
         return value.toLowerCase().contains(searchTerm.toLowerCase());
     }
 
+    // the data table.
     Grid<String> setUpGrid(){
         Grid<String> grid = new Grid<>();
         grid.setItems(Storage.MAP_SALARY.keySet());
@@ -99,6 +103,7 @@ public class DataView extends VerticalLayout {
         return grid;
     }
 
+    // turn raw number to currency format.
     String toCurrencyFormat(float amount){
         return "$ " + NumberFormat.getCurrencyInstance(new Locale("en", "US"))
                 .format(amount).substring(1);

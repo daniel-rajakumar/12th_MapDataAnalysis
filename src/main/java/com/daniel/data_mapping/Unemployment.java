@@ -12,6 +12,7 @@ public class Unemployment {
         return unemployment_rate;
     }
 
+    // remove percentage symbol from the string
     public float cleanUpString(String word){
         return Float.parseFloat(word.substring(0, word.length() - 1));
     }

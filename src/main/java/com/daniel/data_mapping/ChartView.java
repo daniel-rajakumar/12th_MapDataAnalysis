@@ -42,6 +42,7 @@ public class ChartView extends HorizontalLayout {
 
     }
 
+    // setup right layout (linear reg graph)
     VerticalLayout getRightLayout(){
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setClassName("chart-vertical-layout");
@@ -66,6 +67,7 @@ public class ChartView extends HorizontalLayout {
     }
 
 
+    // setup left layout (pie charts and dropdowns)
     VerticalLayout getLeftLayout(){
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setClassName("chart-vertical-layout");
@@ -85,6 +87,7 @@ public class ChartView extends HorizontalLayout {
         return verticalLayout;
     }
 
+
     void lookForMatch(ComboBox<String> one, ComboBox<String> two){
         var obj = new Object() {
             String answer_one = null;
@@ -103,7 +106,10 @@ public class ChartView extends HorizontalLayout {
     Button button_one = new Button("Salary");
     Button button_two = new Button("Unemployment");
 
+
     boolean isFirstTime = true;
+
+    // update pie charts if the user has chosen two valid majors.
     void updateChartIfValid(String one, String two){
         if (one == null || two == null) return;
 
@@ -155,6 +161,7 @@ public class ChartView extends HorizontalLayout {
         isFirstTime = false;
     }
 
+    // the dropdown menu.
     ComboBox<String> getComboBox(String title){
         ComboBox<String> comboBox = new ComboBox<>(title);
         comboBox.setWidthFull();

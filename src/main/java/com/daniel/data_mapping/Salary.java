@@ -12,6 +12,7 @@ public class Salary {
         return starting_salary;
     }
 
+    // turn currency formatted values to raw numbers (ex: 10,000 -> 10000)
     public float cleanUpString(String word){
         return Float.parseFloat(word
                                 .substring(2, word.length() - 2)

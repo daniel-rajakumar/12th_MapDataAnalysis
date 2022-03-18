@@ -20,6 +20,7 @@ public class DataLoading {
         } catch (IOException e) { e.printStackTrace(); }
     }
 
+    // Get and store the data from first csv file.
     void setup_dataSetOne() throws IOException {
         Files.readAllLines(Path.of(RES_DIR + FILE_ONE_NAME)).stream().skip(1).forEach(line -> {
             String[] words = split_csv_line_to_arr(line);
@@ -27,6 +28,7 @@ public class DataLoading {
         });
     }
 
+    // Get and store the data from second csv file.
     void setup_dataSetTwo() throws IOException {
         Files.readAllLines(Path.of(RES_DIR + FILE_TWO_NAME)).stream().skip(1).forEach(line -> {
             String[] words = split_csv_line_to_arr(line);
@@ -34,6 +36,7 @@ public class DataLoading {
         });
     }
 
+    // clean up data
     void dataCleanUp(){
         var map_1 = new HashMap<>(Storage.MAP_SALARY);
         var map_2 = new HashMap<>(Storage.MAP_UNEMPLOYMENT);
@@ -49,6 +52,7 @@ public class DataLoading {
         });
     }
 
+    // data cleanup matches
     boolean keyMatches(String a, String b){
         return a.equals(b) // below, special cases
             || a.equals("Education")        && b.equals("General Education")
@@ -59,6 +63,7 @@ public class DataLoading {
             || a.equals("Religion")         && b.equals("Theology and Religion");
     }
 
+    // to get data from csv file that contains comma.
     public String[] split_csv_line_to_arr(String line){
         return line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
     }
