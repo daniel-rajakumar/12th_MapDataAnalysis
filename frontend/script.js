@@ -1,9 +1,13 @@
 /*
-    credit: https://www.d3-graph-gallery.com/graph/pie_changeData.html
+    credit:
+    https://www.d3-graph-gallery.com/graph/pie_changeData.html
     https://observablehq.com/@hydrosquall/simple-linear-regression-scatterplot-with-d3
  */
 
 let isSalary;
+
+
+// get data from java
 window.ns = {
 
     drawLinearReg : function (map_one, map_two) {
@@ -34,10 +38,6 @@ window.ns = {
 
         update(isDefault ? data1 : data2)
     }
-
-
-
-
 }
 
 
@@ -47,6 +47,9 @@ const pie = {
     margin: 40
 }
 
+
+
+// draw pie chart
 function drawPieCharts() {
     // set the dimensions and margins of the graph
     // append the svg object to the div called 'my_dataviz'
@@ -65,6 +68,7 @@ function drawPieCharts() {
 
 
 const local = d3.local();
+// update pie chart
 function update(data) {
     const radius = Math.min(pie.width, pie.height) / 2 - pie.margin
 
@@ -90,8 +94,6 @@ function update(data) {
 
     // This make sure that group order remains the same in the pie chart
     const data_ready = d3pie(d3.entries(data));
-
-    // console.log(data)
 
     // map to data
     let u = d3.selectAll("#chart_pie").select("svg").selectAll("g")
@@ -154,15 +156,6 @@ function update(data) {
             }
         });
 
-    // u
-    //     .data(data_ready)
-    //     .enter()
-    //     .append('text')
-    //     .text(function(d){ return d.data.key})
-    //     .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
-    //     .style("text-anchor", "middle")
-    //     .style("font-size", 17)
-
     // remove the group that is not present anymore
     u.exit()
         .remove()
@@ -174,6 +167,9 @@ function random(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+
+
+// draw liner reg graph
 function drawLinearRegGraph(map_salary, map_unemployment){
     let map_1 = new Map(Object.entries(JSON.parse(map_salary)));
     let map_2 = new Map(Object.entries(JSON.parse(map_unemployment)));
@@ -206,6 +202,7 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         .attr("class", "yAxis")
         .call(d3.axisLeft(yScale))
 
+    // simple-statistic is used to calculate liner regression.
     const ss = require('simple-statistics')
 
     const linearRegression = ss.linearRegression(data.map(d => [d.x, d.y]))
@@ -219,19 +216,16 @@ function drawLinearRegGraph(map_salary, map_unemployment){
         const xCoordinates = [firstX, lastX];
 
         return xCoordinates.map(d => ({
-            x: d,                         // We pick x and y arbitrarily, just make sure they match d3.line accessors
+            x: d,
             y: linearRegressionLine(d)
         }));
     }
-
-    // console.log(regressionPoints())
 
     const line = d3.line()
         .x(d => xScale(d.x))
         .y(d => yScale(d.y))
 
     const tooltip = d3.select(".chart")
-        // .data(data)
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -245,7 +239,6 @@ function drawLinearRegGraph(map_salary, map_unemployment){
 
     // A function that change this tooltip when the user hover a point.
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
-
     const mouseover = function() {
         tooltip
             .style("opacity", 1)
@@ -272,7 +265,7 @@ function drawLinearRegGraph(map_salary, map_unemployment){
 
     const renderChart = (target) => {
 
-        // First, let's make the scatterplot
+        // First, let's make the scatter plot
         target.selectAll('circle')
             .data(data)
             .enter().append('circle')

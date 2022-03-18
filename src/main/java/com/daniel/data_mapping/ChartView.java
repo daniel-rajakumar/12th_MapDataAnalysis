@@ -58,6 +58,7 @@ public class ChartView extends HorizontalLayout {
 
         verticalLayout.addClassName("toCenter");
 
+        // pass values to javascript
         UI.getCurrent().getPage().executeJs("ns.drawLinearReg($0, $1)"
                 , new Gson().toJson(Storage.MAP_SALARY)
                 , new Gson().toJson(Storage.MAP_UNEMPLOYMENT)
@@ -91,7 +92,7 @@ public class ChartView extends HorizontalLayout {
     void lookForMatch(ComboBox<String> one, ComboBox<String> two){
         var obj = new Object() {
             String answer_one = null;
-            String answer_two  = null;
+            String answer_two = null;
         };
         one.addValueChangeListener(e -> {
             obj.answer_one = e.getValue();
@@ -132,11 +133,14 @@ public class ChartView extends HorizontalLayout {
             HorizontalLayout horizontalLayout = new HorizontalLayout(button_one, button_two);
             horizontalLayout.addClassName("toCenter");
             layout_left.add(horizontalLayout);
+
+            // pass values to javascript
             UI.getCurrent().getPage().executeJs("ns.drawPie($0, $1)"
                     , new Gson().toJson(obj_one)
                     , new Gson().toJson(obj_two)
             );
         } else {
+            // pass values to javascript
             UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
                     , new Gson().toJson(obj_one)
                     , new Gson().toJson(obj_two)
@@ -144,6 +148,7 @@ public class ChartView extends HorizontalLayout {
         }
 
         button_one.addClickListener(e ->  {
+            // pass values to javascript
             UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
                     , new Gson().toJson(obj_one)
                     , new Gson().toJson(obj_two)
@@ -151,6 +156,7 @@ public class ChartView extends HorizontalLayout {
         });
 
         button_two.addClickListener(e ->  {
+            // pass values to javascript
             UI.getCurrent().getPage().executeJs("ns.updatePie($0, $1, $2)"
                     , new Gson().toJson(obj_one)
                     , new Gson().toJson(obj_two)
